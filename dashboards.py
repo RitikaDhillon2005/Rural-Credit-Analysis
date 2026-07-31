@@ -6,7 +6,7 @@ from pathlib import Path
 st.set_page_config(page_title="Rural Credit Analysis Dashboard", layout="wide")
 st.title("Rural Credit Analysis Dashboard")
 
-DATA_PATH = Path(__file__).resolve().parents[1] / "data" / "credit.xlsx"
+DATA_PATH = Path(__file__).resolve().parents / "data" / "agricultural_credit_data.xlsx"
 
 if not DATA_PATH.exists():
     st.error(f"Data file not found at: {DATA_PATH}")
@@ -24,8 +24,12 @@ def load_data(path: Path) -> pd.DataFrame:
         st.stop()
 
     df = df.copy()
+
+    df["Limits_Sanctioned"] = pd.to_numeric(df["Limits_Sanctioned"], errors="coerce")
+    df["Drawals"] = pd.to_numeric(df["Drawals"], errors="coerce")
+    
     df["Utilisation_Rate"] = (
-        df["Drawals"] / df["Limits_Sanctioned"].replace(0, pd.NA)
+        df["Drawals"] / df["Limits_Sanctioned"].replace({0, pd.NA})
     ) * 100
     df["Utilisation_Rate"] = df["Utilisation_Rate"].fillna(0)
     return df
