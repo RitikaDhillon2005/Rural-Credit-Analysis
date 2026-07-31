@@ -29,7 +29,7 @@ def load_data(path: Path) -> pd.DataFrame:
     df["Drawals"] = pd.to_numeric(df["Drawals"], errors="coerce")
     
     df["Utilisation_Rate"] = (
-        df["Drawals"] / df["Limits_Sanctioned"].replace({0, pd.NA})
+        df["Drawals"] / df["Limits_Sanctioned"].replace(0, pd.NA)
     ) * 100
     df["Utilisation_Rate"] = df["Utilisation_Rate"].fillna(0)
     return df
