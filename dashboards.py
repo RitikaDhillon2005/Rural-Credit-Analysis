@@ -6,7 +6,7 @@ from pathlib import Path
 st.set_page_config(page_title="Rural Credit Analysis Dashboard", layout="wide")
 st.title("Rural Credit Analysis Dashboard")
 
-DATA_PATH = Path(__file__).resolve().parents / "data" / "agricultural_credit_data.xlsx"
+DATA_PATH = Path(__file__).resolve().parent / "data" / "agricultural_credit_data.xlsx"
 
 if not DATA_PATH.exists():
     st.error(f"Data file not found at: {DATA_PATH}")
